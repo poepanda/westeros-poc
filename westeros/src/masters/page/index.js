@@ -1,8 +1,7 @@
-const layouts = require('./layouts')
+const common = require('./common.js');
+const customer = require('./customer.js');
 
 module.exports = {
-  common(req, res, next) {
-    res.write(layouts[req.page.layout]());
-    res.end();
-  }
+  common,
+  customer,
 }

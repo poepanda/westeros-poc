@@ -1,33 +1,20 @@
-const pages = {
-  '/': {
-    type: 'page',
-    id: 'merchant',
-    layout: 'merchant',
-    pageType: 'public'
-  },
-  '/content': {
-    type: 'page',
-    id: 'content',
-    layout: 'content',
-    pageType: 'public'
-  },
-  '/content-tw': {
-    type: 'page',
-    id: 'content',
-    layout: 'content',
-    pageType: 'country-specific',
-    country: 'TW',
-  },
-  '/me': {
-    type: 'page',
-    id: 'me',
-    layout: 'profile',
-    pageType: 'customer'
-  },
+const pagesDirectory = require('./pages.config.js');
+
+const isMobile = function (agent = '') {
+  const mobileAgents = /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile/;
+  return mobileAgents.test(agent);
 }
+
 module.exports = {
   whatKindOfRequestIsThis: function (req, res, next) {
-    req.page = pages[req.url];
+    const page = pagesDirectory[req.path];
+    
+    if (page) {
+      // This is a page
+      page.isMobile = isMobile(req.headers['user-agent']);
+      req.page = page;
+    }
+
     next();
   }
 }

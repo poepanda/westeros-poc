@@ -25,7 +25,7 @@ app.use(router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.send('not found');
+  res.status(404).end('not found');
 });
 
 // error handler
